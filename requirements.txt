@@ -1,0 +1,11 @@
+sentence-transformers
+transformers
+huggingface-hub
+qdrant-client
+beautifulsoup4
+fastapi
+uvicorn
+sqlmodel
+requests
+python-dotenv
+
