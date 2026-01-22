@@ -1,13 +1,12 @@
 from langchain_core.output_parsers import JsonOutputParser
-from llms import model, ollama_model
-from prompts import query_refinement, image_query_extraction
+from App.llms import model, ollama_model
+from App.prompts import query_refinement, image_query_extraction, products_choice
 from langchain_core.prompts import ChatPromptTemplate
 import base64
 from langchain_core.messages import HumanMessage
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
+from qdrant_client import QdrantClient,models
+from App.Hybrid_Search import HybridSearcher
 
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 client = QdrantClient(url="http://localhost:6333")
 
 
@@ -33,28 +32,48 @@ def describe_image(image_path: str):
         return f"Error describing image: {str(e)}"
 
 
-def refine(query):
-    prompt = ChatPromptTemplate.from_template(query_refinement)
-    chain = prompt | model
-    try:
-        answer = chain.invoke({"query": query})
-        return answer.content
-    except Exception as e:
-        return {"error": f"Failed to parse: {str(e)}", "raw_query": query}
 
 
-def get_result(query_text,limit=5):
-    query_text = refine(query_text)
-    query_vector = embedding_model.encode(query_text).tolist()
-    results = client.query_points(
-        collection_name="products",
-        query=query_vector,
-        using="dense",
-        limit=limit
-    ).points
-    for i, point in enumerate(results, 1):
-        print(f"\n--- Result {i} ---")
-        print(f"Score: {point.score}")
-        print(f"ID: {point.id}")
-        print(f"Payload: {point.payload}")
+class Pipeline :
+    def __init__(self):
+        self.hybrid_searcher = HybridSearcher(collection_name="products")
+        self.prompt_refinement = ChatPromptTemplate.from_template(query_refinement)
+        self.prompt_choice = ChatPromptTemplate.from_template(products_choice)
+        self.chain_refinement = self.prompt_refinement | model | JsonOutputParser()
+        self.chain_choice = self.prompt_choice | model
+
+
+    def search (self, query,filters):
+        return self.hybrid_searcher.search(query, filters)
+
+    def refine_query(self,query):
+        try:
+            answer = self.chain_refinement.invoke({"query": query})
+            return answer
+        except Exception as e:
+            return {"error": f"Failed to parse: {str(e)}", "raw_query": query}
+
+
+    def make_choice(self,query,product_list):
+        try:
+            answer = self.chain_choice.invoke({"query": query, "product_list": product_list})
+            return answer.content
+        except Exception as e:
+            return {"error": f"Failed to rerank products : {str(e)}", "raw_query": query}
+
+    def pipeline(self,query):
+        refined_query = self.refine_query(query)
+        query_filter = models.Filter(
+            should=[
+                models.FieldCondition(
+                    key="discounted_price",
+                    range=models.Range(lte=refined_query["filters"]["max_price"]),
+                )
+            ],
+        )
+        preliminary_results = self.search(query,query_filter)
+        result = self.make_choice(query,preliminary_results)
+        return result
+
+
 

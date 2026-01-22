@@ -1,17 +1,19 @@
-from fastapi import FastAPI
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# The file where HybridSearcher is stored
-from App.Hybrid_Search import HybridSearcher
+
+from fastapi import FastAPI
+from App.RAG_pipeline import Pipeline
 
 app = FastAPI()
 
-# Create a neural searcher instance
-hybrid_searcher = HybridSearcher(collection_name="products")
-
+# create a pipeline class
+pipeline_rag = Pipeline()
 
 @app.get("/api/search")
 def search_startup(q: str):
-    return {"result": hybrid_searcher.search(text=q)}
+    return {"result": pipeline_rag.pipeline(query=q)}
 
 
 if __name__ == "__main__":

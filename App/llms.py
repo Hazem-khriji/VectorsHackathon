@@ -6,7 +6,7 @@ load_dotenv()
 model = ChatGoogleGenerativeAI(
     model = "gemini-2.5-flash",
     temperature= 0.7,
-    api_key= os.getenv("GEMINI_API_KEY")
+    api_key= os.getenv("GEMINI_API_KEY2")
 )
 
 ollama_model = ChatOllama(

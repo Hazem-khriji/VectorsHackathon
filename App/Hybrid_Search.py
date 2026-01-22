@@ -11,7 +11,7 @@ class HybridSearcher:
         self.qdrant_client = QdrantClient(url="http://localhost:6333")
 
 
-    def search(self, text: str):
+    def search(self, text: str,filters=None):
         search_result = self.qdrant_client.query_points(
             collection_name=self.collection_name,
             prefetch=[
@@ -29,7 +29,7 @@ class HybridSearcher:
             query=models.Document(text=text, model=self.LATE_INTERACTION_MODEL),
             using="text-late-interaction",
             with_payload=True,
-            query_filter=None,
+            query_filter=filters,
             limit=5,
         ).points
         metadata = [point.payload for point in search_result]
