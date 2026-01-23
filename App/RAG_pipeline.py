@@ -9,31 +9,6 @@ from App.Hybrid_Search import HybridSearcher
 
 client = QdrantClient(url="http://localhost:6333")
 
-
-def describe_image(image_path: str):
-    with open(image_path, "rb") as image_file:
-        image_data = base64.b64encode(image_file.read()).decode("utf-8")
-
-
-    message = HumanMessage(
-        content=[
-            {"type": "text", "text": image_query_extraction},
-            {
-                "type": "image_url",
-                "image_url": {"url": f"data:image/jpeg;base64,{image_data}"},
-            },
-        ]
-    )
-
-    try:
-        response = model.invoke([message])
-        return response.content
-    except Exception as e:
-        return f"Error describing image: {str(e)}"
-
-
-
-
 class Pipeline :
     def __init__(self):
         self.hybrid_searcher = HybridSearcher(collection_name="products")
@@ -42,6 +17,25 @@ class Pipeline :
         self.chain_refinement = self.prompt_refinement | model | JsonOutputParser()
         self.chain_choice = self.prompt_choice | model
 
+    def describe_image(image_path: str):
+        with open(image_path, "rb") as image_file:
+            image_data = base64.b64encode(image_file.read()).decode("utf-8")
+
+        message = HumanMessage(
+            content=[
+                {"type": "text", "text": image_query_extraction},
+                {
+                    "type": "image_url",
+                    "image_url": {"url": f"data:image/jpeg;base64,{image_data}"},
+                },
+            ]
+        )
+
+        try:
+            response = model.invoke([message])
+            return response.content
+        except Exception as e:
+            return ""
 
     def search (self, query,filters):
         return self.hybrid_searcher.search(query, filters)
@@ -61,7 +55,12 @@ class Pipeline :
         except Exception as e:
             return {"error": f"Failed to rerank products : {str(e)}", "raw_query": query}
 
-    def pipeline(self,query):
+    def pipeline(self,query:str,image_path:str=None):
+        if(image_path):
+            try:
+                query += self.describe_image(image_path)
+            except Exception as e:
+                query = query
         refined_query = self.refine_query(query)
         query_filter = models.Filter(
             should=[
