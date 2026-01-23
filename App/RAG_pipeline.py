@@ -47,7 +47,6 @@ class Pipeline :
         except Exception as e:
             return {"error": f"Failed to parse: {str(e)}", "raw_query": query}
 
-
     def make_choice(self,query,product_list):
         try:
             answer = self.chain_choice.invoke({"query": query, "product_list": product_list})
