@@ -1,88 +1,113 @@
-  const searchInput = document.getElementById('searchInput');
-  const voiceBtn= document.getElementById('voiceBtn');
-  const fileInput = document.getElementById('fileInput');
-  const linkBtn = document.getElementById('linkBtn');
-  const sendBtn = document.getElementById('sendBtn');
-  const preview = document.getElementById('preview');
+// API Configuration
+const API_URL = 'http://localhost:8000';  // Change this to your backend URL
 
-  // le vocale
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (SpeechRecognition) {
-    const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.lang ='fr-FR';
+// Get DOM elements
+const form = document.getElementById('searchForm');
+const queryInput = document.getElementById('queryInput');
+const imageInput = document.getElementById('imageInput');
+const imagePreview = document.getElementById('imagePreview');
+const submitBtn = document.getElementById('submitBtn');
+const btnText = document.getElementById('btnText');
+const spinner = document.getElementById('spinner');
+const resultsDiv = document.getElementById('results');
+const resultsContent = document.getElementById('resultsContent');
+const errorDiv = document.getElementById('error');
 
-    voiceBtn.addEventListener('click', () => {
-      recognition.start();
-    });
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      searchInput.value = transcript;
-    };
-  } else {
-    voiceBtn.disabled = true;
-    voiceBtn.title = "Votre navigateur ne supporte pas la reconnaissance vocale";
-  }
-  
-  // Stockage temporaire des fichiers et liens
-  const filesArray = [];
-  const linksArray = [];
-
-  // Gestion fichier/image
-  fileInput.addEventListener('change', () => {
-    const file = fileInput.files[0];
-    if(file) {
-      filesArray.push(file);
-      alert(`Fichier ajouté: ${file.name}`);
+// Image preview functionality
+imageInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    
+    if (file) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            imagePreview.innerHTML = `
+                <img src="${e.target.result}" alt="Preview">
+                <p>${file.name}</p>
+            `;
+        };
+        
+        reader.readAsDataURL(file);
+    } else {
+        imagePreview.innerHTML = '';
     }
-    fileInput.value = '';
-  });
+});
 
-  // Gestion lien
-  linkBtn.addEventListener('click', () => {
-    const url = prompt("Entrez le lien URL:");
-    if(url) {
-      linksArray.push(url);
-      alert(`Lien ajouté: ${url}`);
+// Form submission
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Clear previous results/errors
+    resultsDiv.classList.add('hidden');
+    errorDiv.classList.add('hidden');
+    
+    // Validate inputs
+    const query = queryInput.value.trim();
+    const imageFile = imageInput.files[0];
+    
+    if (!query && !imageFile) {
+        showError('Please provide a search query or upload an image');
+        return;
     }
-  });
-
-  // Bouton Envoyer
-  sendBtn.addEventListener('click', () => {
-    // Texte
-    const textValue = searchInput.value.trim();
-    if(textValue) {
-      const div = document.createElement('div');
-      div.textContent = 'Texte: ' + textValue;
-      preview.appendChild(div);
-      searchInput.value = '';
+    
+    // Show loading state
+    setLoading(true);
+    
+    try {
+        // Prepare form data
+        const formData = new FormData();
+        
+        if (query) {
+            formData.append('query', query);
+        }
+        
+        if (imageFile) {
+            formData.append('image', imageFile);
+        }
+        
+        // Make API request
+        const response = await fetch(`${API_URL}/api/search`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showResults(data.data);
+        } else {
+            showError(data.error || 'An error occurred');
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Failed to connect to the server. Please try again.');
+    } finally {
+        setLoading(false);
     }
+});
 
-    // Fichiers
-    filesArray.forEach(file => {
-      const div = document.createElement('div');
-      if(file.type.startsWith('image/')) {
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        div.appendChild(img);
-        div.appendChild(document.createTextNode(' ' + file.name));
-      } else {
-        div.textContent = 'Fichier: ' + file.name;
-      }
-      preview.appendChild(div);
-    });
-    filesArray.length = 0;
+// Helper functions
+function setLoading(isLoading) {
+    if (isLoading) {
+        submitBtn.disabled = true;
+        btnText.classList.add('hidden');
+        spinner.classList.remove('hidden');
+    } else {
+        submitBtn.disabled = false;
+        btnText.classList.remove('hidden');
+        spinner.classList.add('hidden');
+    }
+}
 
-    // Liens
-    linksArray.forEach(url => {
-      const div = document.createElement('div');
-      const a = document.createElement('a');
-      a.href = url;
-      a.textContent = url;
-      a.target = "_blank";
-      div.appendChild(a);
-      preview.appendChild(div);
-    });
-    linksArray.length = 0;
-  });
+function showResults(data) {
+    resultsContent.textContent = typeof data === 'string' 
+        ? data 
+        : JSON.stringify(data, null, 2);
+    resultsDiv.classList.remove('hidden');
+}
+
+function showError(message) {
+    errorDiv.textContent = message;
+    errorDiv.classList.remove('hidden');
+}

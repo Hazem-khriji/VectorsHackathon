@@ -3,21 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinCommerce Engine</title>
+    <title>Product Search</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="search-container">
-        <div class="input-row">
-            <input type="text" id="searchInput" placeholder="Tapez ici ou utilisez le micro...">
-            <button id="voiceBtn" title="Saisie vocale">🎤</button>
-            <label for="fileInput" title="Ajouter fichier ou image">📎</label>
-            <input type="file" id="fileInput" accept="image/*,application/pdf">
-            <button id="linkBtn" title="Ajouter lien">🔗</button>
-       </div>
-     <button id="sendBtn">Envoyer</button>
-     <div class="preview" id="preview"></div>
+    <div class="container">
+        <h1>Product Search</h1>
+
+        <form id="searchForm">
+            <!-- Text Input -->
+            <div class="form-group">
+                <label for="queryInput">Search Query:</label>
+                <input
+                    type="text"
+                    id="queryInput"
+                    name="query"
+                    placeholder="Enter product description..."
+                >
+            </div>
+
+            <!-- Image Upload -->
+            <div class="form-group">
+                <label for="imageInput">Upload Image (Optional):</label>
+                <input
+                    type="file"
+                    id="imageInput"
+                    name="image"
+                    accept="image/*"
+                >
+                <div id="imagePreview"></div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitBtn">
+                <span id="btnText">Search</span>
+                <span id="spinner" class="spinner hidden"></span>
+            </button>
+        </form>
+
+        <!-- Results Section -->
+        <div id="results" class="results hidden">
+            <h2>Results:</h2>
+            <div id="resultsContent"></div>
+        </div>
+
+        <!-- Error Section -->
+        <div id="error" class="error hidden"></div>
     </div>
-  <script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
