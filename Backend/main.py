@@ -10,7 +10,7 @@ from typing import Optional
 import shutil
 from pathlib import Path
 
-UPLOAD_DIR = "uploads"
+UPLOAD_DIR = Path("uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
@@ -23,6 +23,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # create a pipeline class
 pipeline_rag = Pipeline()
 
@@ -38,7 +39,7 @@ async def search_products(
     try:
         image_path = None
         if image:
-            image_path = UPLOAD_DIR / image.filename
+            image_path = UPLOAD_DIR/image.filename
             with image_path.open("wb") as buffer:
                 shutil.copyfileobj(image.file, buffer)
 
@@ -47,13 +48,11 @@ async def search_products(
 
         search_query = query if query else ""
 
-        # Run your pipeline
         result = pipeline_rag.pipeline(
             query=search_query,
             image_path=str(image_path) if image_path else None
         )
 
-        # Clean up uploaded image
         if image_path and image_path.exists():
             image_path.unlink()
 
@@ -62,7 +61,6 @@ async def search_products(
             "data": result
         })
     except Exception as e:
-        # Clean up on error
         if image_path and image_path.exists():
             image_path.unlink()
 
