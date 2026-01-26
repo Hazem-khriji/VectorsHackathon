@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+import uvicorn
 from App.RAG_pipeline import Pipeline
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,6 +18,8 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 
@@ -85,5 +87,4 @@ async def root():
 
 
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="localhost", port=8000)
