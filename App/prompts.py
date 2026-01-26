@@ -55,14 +55,14 @@ Here are the top 5 products found in our database:
 ### TASK
 1. Analyze the user's intent from the query .
 2. Select the top 1, 2, or 3 products (only the ones that best fit).
-3. For each selected product, provide a "Financial Recommendation" explanation.
+3. For each selected product, provide an explanation of the choice for the user.
 
 ### CONSTRAINTS
 - CRITICAL: Your explanation for each product must focus EXCLUSIVELY on how its features and price satisfy the user's specific query.
 - DO NOT compare products (e.g., do not say "This is cheaper than Product B"). 
 - DO NOT mention the other products in the list.
 - Each recommendation should feel like an independent, expert opinion on that specific item's value to the user.
-- Never return an empty list .There should be at least one product even if it's a replacement. 
+- Never return an empty list .There should be at least one product even if it's a replacement and never mention yourself in any way . 
 
 ### OUTPUT FORMAT 
 Return a well-formatted string in which you mention the product(s) (name and url) along with the reason 

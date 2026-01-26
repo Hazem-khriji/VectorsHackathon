@@ -61,14 +61,17 @@ class Pipeline :
             except Exception as e:
                 query = query
         refined_query = self.refine_query(query)
-        query_filter = models.Filter(
-            should=[
-                models.FieldCondition(
-                    key="discounted_price",
-                    range=models.Range(lte=refined_query["filters"]["max_price"]),
-                )
-            ],
-        )
+        try:
+            query_filter = models.Filter(
+                should=[
+                    models.FieldCondition(
+                        key="discounted_price",
+                        range=models.Range(lte=refined_query["filters"]["max_price"]),
+                    )
+                ],
+            )
+        except Exception as e:
+            query_filter = None
         preliminary_results = self.search(query,query_filter)
         result = self.make_choice(query,preliminary_results)
         return result
