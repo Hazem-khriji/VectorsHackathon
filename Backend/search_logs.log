@@ -1781,3 +1781,109 @@ b'{"status":{"error":"Bad request: Index required but not found for \\"session_i
 2026-01-30 17:27:30,365 - ERROR - SEARCH_ERROR | query='mackbook' | error=Unexpected Response: 400 (Bad Request)
 Raw response content:
 b'{"status":{"error":"Wrong input: Not existing vector name error: text-late-interaction"},"time":0.000894632}'
+2026-01-30 18:00:20,260 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333 "HTTP/1.1 200 OK"
+2026-01-30 18:00:23,031 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333 "HTTP/1.1 200 OK"
+2026-01-30 18:00:23,429 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections "HTTP/1.1 200 OK"
+2026-01-30 18:00:23,672 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors "HTTP/1.1 200 OK"
+2026-01-30 18:00:23,676 - INFO - Created collection: user_behaviors
+2026-01-30 18:00:26,279 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333 "HTTP/1.1 200 OK"
+2026-01-30 18:00:26,300 - INFO - Running startup tasks...
+2026-01-30 18:00:26,301 - INFO - Initializing product indexes...
+2026-01-30 18:00:29,107 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333 "HTTP/1.1 200 OK"
+2026-01-30 18:00:29,603 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/index?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:00:29,807 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/index?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:00:30,013 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/index?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:00:30,221 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/index?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:00:30,224 - INFO - Initializing behavioral indexes...
+2026-01-30 18:00:32,841 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333 "HTTP/1.1 200 OK"
+2026-01-30 18:00:33,231 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/exists "HTTP/1.1 200 OK"
+2026-01-30 18:00:33,414 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/index?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:00:33,595 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/index?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:00:48,207 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:00:48,612 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:00:48,620 - INFO - FETCH_FEED | mode=generic | session=session_1769792446937_n8da1kho8
+2026-01-30 18:00:48,756 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:00:48,906 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:00:49,045 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:00:49,081 - INFO - FETCH_FEED | mode=generic | session=session_1769792446937_n8da1kho8
+2026-01-30 18:00:49,213 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:00:55,593 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:00:55,997 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:00:56,005 - INFO - FETCH_FEED | mode=generic | session=session_1769792446937_n8da1kho8
+2026-01-30 18:00:56,154 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:01:03,958 - INFO - TRACK_EVENT | session=session_1769792446937_n8da1kho8 | type=product_click | data={'session_id': 'session_1769792446937_n8da1kho8', 'event_type': 'product_click', 'timestamp': '2026-01-30T17:01:03.871Z', 'product_id': 16, 'category': 'Electronics|HomeTheater,TV&Video|Televisions|SmartTelevisions', 'price': 13.999} | time=2026-01-30T17:01:03.871Z
+2026-01-30 18:01:10,468 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:01:10,470 - INFO - STORED_BEHAVIOR | session=session_1769792446937_n8da1kho8 | type=product_click | text='User clicked on Electronics|HomeTheater,TV&Video|Televisions|SmartTelevisions priced at $13.999'
+2026-01-30 18:01:13,065 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:01:13,224 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:01:13,227 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:01:19,756 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:01:19,953 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:01:20,347 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:01:20,352 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:01:20,893 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:01:44,780 - INFO - TRACK_EVENT | session=session_1769792446937_n8da1kho8 | type=search | data={'session_id': 'session_1769792446937_n8da1kho8', 'event_type': 'search', 'timestamp': '2026-01-30T17:01:44.775Z', 'query': 'iphone cable that only up to 10$', 'budget': None, 'has_image': False} | time=2026-01-30T17:01:44.775Z
+2026-01-30 18:01:52,391 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:01:52,391 - INFO - STORED_BEHAVIOR | session=session_1769792446937_n8da1kho8 | type=search | text='User searched for: iphone cable that only up to 10$'
+2026-01-30 18:01:52,396 - INFO - SEARCH_REQUEST | query='iphone cable that only up to 10$' | original_query='iphone cable that only up to 10$' | has_image=False | max_budget=None
+2026-01-30 18:01:53,069 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-30 18:01:56,166 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:01:58,528 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-30 18:01:59,280 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:01:59,282 - INFO - SEARCH_RESULTS | query='iphone cable that only up to 10$' | count=5 | budget_applied=False
+2026-01-30 18:02:10,433 - INFO - TRACK_EVENT | session=session_1769792446937_n8da1kho8 | type=product_click | data={'session_id': 'session_1769792446937_n8da1kho8', 'event_type': 'product_click', 'timestamp': '2026-01-30T17:02:10.124Z', 'product_id': 3, 'category': 'Computers&Accessories|Accessories&Peripherals|Cables&Accessories|Cables|USBCables', 'price': 970} | time=2026-01-30T17:02:10.124Z
+2026-01-30 18:02:10,820 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:02:10,821 - INFO - STORED_BEHAVIOR | session=session_1769792446937_n8da1kho8 | type=product_click | text='User clicked on Computers&Accessories|Accessories&Peripherals|Cables&Accessories|Cables|USBCables priced at $970'
+2026-01-30 18:02:11,166 - INFO - TRACK_EVENT | session=session_1769792446937_n8da1kho8 | type=product_click | data={'session_id': 'session_1769792446937_n8da1kho8', 'event_type': 'product_click', 'timestamp': '2026-01-30T17:02:11.089Z', 'product_id': 3, 'category': 'Computers&Accessories|Accessories&Peripherals|Cables&Accessories|Cables|USBCables', 'price': 970} | time=2026-01-30T17:02:11.089Z
+2026-01-30 18:02:11,316 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:02:11,319 - INFO - STORED_BEHAVIOR | session=session_1769792446937_n8da1kho8 | type=product_click | text='User clicked on Computers&Accessories|Accessories&Peripherals|Cables&Accessories|Cables|USBCables priced at $970'
+2026-01-30 18:02:29,644 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:02:30,059 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:02:30,060 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='computers&accessories|accessories&peripherals|cables&accessories|cables|usbcables iphone cable that only up to 10$ electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:02:30,784 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:02:30,918 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:02:31,051 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:02:31,053 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='computers&accessories|accessories&peripherals|cables&accessories|cables|usbcables iphone cable that only up to 10$ electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:02:31,472 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:02:37,193 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:02:37,570 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:02:37,571 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='computers&accessories|accessories&peripherals|cables&accessories|cables|usbcables iphone cable that only up to 10$ electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:02:38,303 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:02:42,339 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:02:42,467 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:02:42,468 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='computers&accessories|accessories&peripherals|cables&accessories|cables|usbcables iphone cable that only up to 10$ electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:02:42,803 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:02:45,583 - INFO - TRACK_EVENT | session=session_1769792446937_n8da1kho8 | type=search | data={'session_id': 'session_1769792446937_n8da1kho8', 'event_type': 'search', 'timestamp': '2026-01-30T17:02:45.579Z', 'query': 'tv', 'budget': None, 'has_image': False} | time=2026-01-30T17:02:45.579Z
+2026-01-30 18:02:45,721 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:02:45,722 - INFO - STORED_BEHAVIOR | session=session_1769792446937_n8da1kho8 | type=search | text='User searched for: tv'
+2026-01-30 18:02:45,726 - INFO - SEARCH_REQUEST | query='tv' | original_query='tv' | has_image=False | max_budget=None
+2026-01-30 18:02:46,145 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-30 18:02:46,910 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:02:48,372 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-30 18:02:49,131 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:02:49,133 - INFO - SEARCH_RESULTS | query='tv' | count=5 | budget_applied=False
+2026-01-30 18:02:59,740 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:03:00,154 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:03:00,154 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='tv computers&accessories|accessories&peripherals|cables&accessories|cables|usbcables iphone cable that only up to 10$ electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:03:00,863 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:03:01,002 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:03:01,138 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:03:01,139 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='tv computers&accessories|accessories&peripherals|cables&accessories|cables|usbcables iphone cable that only up to 10$ electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:03:01,468 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:03:15,650 - INFO - TRACK_EVENT | session=session_1769792446937_n8da1kho8 | type=search | data={'session_id': 'session_1769792446937_n8da1kho8', 'event_type': 'search', 'timestamp': '2026-01-30T17:03:15.646Z', 'query': 'cables iphone', 'budget': None, 'has_image': False} | time=2026-01-30T17:03:15.646Z
+2026-01-30 18:03:16,051 - INFO - HTTP Request: PUT https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points?wait=true "HTTP/1.1 200 OK"
+2026-01-30 18:03:16,052 - INFO - STORED_BEHAVIOR | session=session_1769792446937_n8da1kho8 | type=search | text='User searched for: cables iphone'
+2026-01-30 18:03:16,053 - INFO - SEARCH_REQUEST | query='cables iphone' | original_query='cables iphone' | has_image=False | max_budget=None
+2026-01-30 18:03:16,338 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-30 18:03:17,092 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:03:18,534 - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-30 18:03:19,312 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:03:19,313 - INFO - SEARCH_RESULTS | query='cables iphone' | count=5 | budget_applied=False
+2026-01-30 18:03:51,075 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:03:51,487 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:03:51,487 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='cables iphone tv computers&accessories|accessories&peripherals|cables&accessories|cables|usbcables iphone cable that only up to 10$ electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:03:52,155 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
+2026-01-30 18:03:52,294 - INFO - HTTP Request: GET https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products "HTTP/1.1 200 OK"
+2026-01-30 18:03:52,430 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/user_behaviors/points/scroll "HTTP/1.1 200 OK"
+2026-01-30 18:03:52,431 - INFO - FETCH_FEED | mode=personalized | session=session_1769792446937_n8da1kho8 | context='cables iphone tv computers&accessories|accessories&peripherals|cables&accessories|cables|usbcables iphone cable that only up to 10$ electronics|hometheater,tv&video|televisions|smarttelevisions'
+2026-01-30 18:03:52,740 - INFO - HTTP Request: POST https://feba55cb-80bc-431f-87a3-8b5513d066c4.us-east4-0.gcp.cloud.qdrant.io:6333/collections/products/points/query "HTTP/1.1 200 OK"
