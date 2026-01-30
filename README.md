@@ -1,225 +1,185 @@
-# AI-Powered Product Search 🔍
+# AI-Powered Product Search & Personalization Engine 🔍
 
-An intelligent product search application that combines the power of AI and vector search to help users find products using natural language queries and images.
+An intelligent, full-stack product search application built for the **Vectors Hackathon**. This project leverages **AI**, **Vector Search (Qdrant)**, and **User Behavior Tracking** to deliver a highly personalized shopping experience. It features hybrid search (text + image), real-time recommendations, and an adaptive interface that learns from user interactions.
 
-## 🌟 Features
+## 🌟 Key Features
 
-- **Text-Based Search**: Search for products using natural language descriptions
-- **Image Search**: Upload product images to find similar items
-- **Hybrid Search**: Combines text and image search for better results
-- **RAG Pipeline**: Uses Retrieval-Augmented Generation for accurate product recommendations
-- **Modern UI**: Beautiful, responsive React interface with smooth animations
-- **Real-time Results**: Fast, AI-powered search results
+### 🔍 Advanced Search & RAG
+- **Hybrid Search**: seamlessly combines keyword matching with semantic vector search for superior accuracy.
+- **Visual Search**: Upload images to find visually similar products using computer vision models.
+- **RAG Pipeline**: Retrieves relevant context to generate AI-powered explanations for search results.
+- **Query Refinement**: Automatically enhances user queries to capture search intent better.
 
-## 🏗️ Architecture
+### 👤 Personalization & Behavioral Tracking
+- **Real-Time Tracking**: Monitors user actions including:
+  - `search`: What users are looking for.
+  - `view`: Products they open.
+  - `click`: Items they show interest in.
+- **Behavioral Vectors**: Converts user actions into vector embeddings stored in Qdrant's `user_behaviors` collection.
+- **Adaptive Feed**: The main product feed personalizes itself based on the user's "cumulative context" (a weighted history of their interests).
+- **Session-Based Monitoring**: Tracks anonymous user sessions to provide immediate personalization without requiring login.
 
-### Frontend
-- **React 19** with TypeScript
-- **Vite** for fast development and building
-- Modern, responsive UI with gradient backgrounds
-- Real-time search with loading states
+### 🛠️ Architecture & Automation
+- **Automatic Index Management**: The system automatically checks for and creates necessary Qdrant collections and indexes (`products` and `user_behaviors`) on startup.
+- **Dockerized Deployment**: Easy-to-deploy backend services using Docker Compose.
 
-### Backend
-- **FastAPI** for high-performance API
-- **LangChain** for LLM orchestration
-- **Qdrant** vector database for semantic search
-- **Hybrid Search** combining multiple retrieval strategies
-- Support for both text and image inputs
+---
 
-### AI/ML Components
-- RAG (Retrieval-Augmented Generation) pipeline
-- Vector embeddings for semantic search
-- Image understanding for visual search
-- Query refinement for better results
+## 🏗️ Technical Architecture
+
+### Frontend (`Frontend/`)
+There are two frontend versions available:
+1. **Standard App (`Frontend/app`)**: The primary React application featuring the full search and personalization UI.
+2. **Version 2 (`Frontend/app_version_2`)**: An experimental or alternative interface (if applicable).
+
+**Tech Stack**:
+- **React 19** & **TypeScript**
+- **Vite** for ultra-fast tooling
+- **Modern UI**: Gradient aesthetics, glassmorphism, and responsive design.
+
+### Backend (`Backend/`)
+The core logic engine exposed via REST API.
+- **FastAPI**: High-performance asynchronous web framework.
+- **LangChain**: Orchestrates interactions with Large Language Models (LLMs).
+- **Qdrant**: The vector database powering all semantic search and personalization.
+- **Sentence Transformers**: Generates embeddings for text and images.
+
+### Data & AI Flow
+1. **Ingestion**: Product data is vectorized and stored in Qdrant (`products` collection).
+2. **Search**: User queries (text/image) are converted to vectors and compared against product vectors via Hybrid Search.
+3. **Tracking**: User interactions are captured, vectorized, and stored (`user_behaviors` collection).
+4. **Personalization**: When a user requests recommendations or the home feed, the system aggregates their recent behavior vectors to query for products that match their evolving interests.
+
+---
 
 ## 📁 Project Structure
 
-```
+```bash
 VectorsHackthon/
 ├── Frontend/
-│   └── app/                 # React application
-│       ├── src/
-│       │   ├── App.tsx      # Main component
-│       │   ├── App.css      # Styling
-│       │   └── main.tsx     # Entry point
-│       └── package.json
+│   ├── app/                 # Main React Frontend
+│   └── app_version_2/       # Secondary Frontend
 ├── Backend/
-│   └── main.py              # FastAPI server
-├── App/
-│   ├── RAG_pipeline.py      # RAG implementation
-│   ├── Hybrid_Search.py     # Hybrid search logic
-│   ├── llms.py              # LLM configurations
-│   └── prompts.py           # AI prompts
-└── README.md
+│   ├── main.py              # FastAPI Application Entry & Endpoints
+│   └── Dockerfile           # Backend Container Config
+├── App/                     # Core Logic Modules
+│   ├── RAG_pipeline.py      # Retrieval-Augmented Generation Logic
+│   ├── Hybrid_Search.py     # Qdrant Search Implementation
+│   ├── user_behavior.py     # Behavior Tracking & Vectorization
+│   └── llms.py              # LLM Integration Settings
+├── create_indexes.py        # Product Index Creation Script
+├── create_behavior_indexes.py # User Behavior Index Creation Script
+└── docker-compose.yml       # Container Orchestration
 ```
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+- **Node.js** (v18+)
+- **Python** (3.8+)
+- **Docker Desktop** (for running Qdrant)
 
-- **Node.js** (v18 or higher)
-- **Python** 3.8+
-- **Qdrant** vector database running on `http://localhost:6333`
-- Virtual environment (recommended)
 
-### Installation
+## 🚀 Quick Start
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd VectorsHackthon
-   ```
+### Option 1: Using Docker Compose (Recommended - Easiest)
 
-2. **Set up the Python backend**
-   ```bash
-   # Create and activate virtual environment
-   python -m venv .venv
-   .venv\Scripts\activate  # On Windows
-   # source .venv/bin/activate  # On macOS/Linux
-
-   # Install dependencies
-   pip install -r requirements.txt
-   ```
-
-3. **Set up the React frontend**
-   ```bash
-   cd Frontend/app
-   npm install
-   ```
-
-4. **Configure environment variables**
-   Create a `.env` file in the root directory with necessary API keys and configurations.
-
-### Running the Application
-
-1. **Start Qdrant** (if not already running)
-   ```bash
-   # Follow Qdrant documentation for your setup
-   docker run -p 6333:6333 qdrant/qdrant
-   ```
-
-2. **Start the backend server**
-   ```bash
-   # From the root directory
-   cd Backend
-   python main.py
-   ```
-   The API will be available at `http://localhost:8000`
-
-3. **Start the frontend development server**
-   ```bash
-   cd Frontend/app
-   npm run dev
-   ```
-   The app will be available at `http://localhost:5173`
-
-## 🎯 Usage
-
-1. **Text Search**: 
-   - Enter a product description in the search box
-   - Click "Search" to get AI-powered results
-
-2. **Image Search**:
-   - Click the upload area or drag and drop an image
-   - Optionally add text description for better results
-   - Click "Search"
-
-3. **View Results**:
-   - Results appear below the search form
-   - AI generates relevant product recommendations
-
-4. **Reset**:
-   - Click "Reset" to clear the form and start a new search
-
-## 🔧 API Endpoints
-
-### POST `/api/search`
-Search for products using text and/or image
-
-**Request:**
-- `query` (optional): Text search query
-- `image` (optional): Image file (PNG, JPG, WEBP)
-
-**Response:**
-```json
-{
-  "success": true,
-  "data": "AI-generated product recommendations"
-}
+1. **Setup Environment Variables**
+   Create a `.env` file in the root directory:
+```env
+   # Qdrant Configuration
+   QDRANT_URL=http://qdrant:6333
+   QDRANT_API_KEY=your_qdrant_api_key_if_cloud
+   
+   # LLM Configuration (e.g., OpenAI, Gemini, etc.)
+   OPENAI_API_KEY=your_api_key
 ```
 
-## 🛠️ Technologies Used
-
-### Frontend
-- React 19
-- TypeScript
-- Vite
-- Modern CSS with animations
-
-### Backend
-- FastAPI
-- LangChain
-- Qdrant Client
-- Python 3.8+
-
-### AI/ML
-- Large Language Models (LLMs)
-- Vector Embeddings
-- RAG (Retrieval-Augmented Generation)
-- Hybrid Search
-
-## 🎨 Features in Detail
-
-### Modern UI Design
-- Dark gradient background with glowing effects
-- Glass-morphism card design
-- Smooth animations and transitions
-- Responsive layout for all devices
-- Custom file upload interface
-- Loading states and error handling
-
-### Intelligent Search
-- Query refinement for better results
-- Image understanding and description
-- Semantic search using vector embeddings
-- Hybrid search combining multiple strategies
-- Context-aware product recommendations
-
-## 📝 Development
-
-### Frontend Development
+2. **Run Everything with Docker Compose**
 ```bash
-cd Frontend/app
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run lint     # Lint code
+   docker-compose up --build
 ```
-
-### Backend Development
-```bash
-cd Backend
-python main.py   # Start FastAPI server
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👥 Authors
-
-Created for the Vectors Hackathon
-
-## 🙏 Acknowledgments
-
-- LangChain for LLM orchestration
-- Qdrant for vector search
-- FastAPI for the backend framework
-- React team for the amazing frontend library
+   - **Qdrant**: `http://localhost:6333`
+   - **Backend**: `http://localhost:8000`
+   - **Frontend**: `http://localhost:80`
 
 ---
 
-**Note**: Make sure all services (Qdrant, Backend, Frontend) are running for the application to work properly.
+### Option 2: Manual Setup (Step by Step)
+
+#### 1. Start Vector Database (Qdrant)
+Run Qdrant using Docker:
+```bash
+docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
+```
+
+#### 2. Setup Environment Variables
+Create a `.env` file in the root directory:
+```env
+# Qdrant Configuration
+QDRANT_URL=http://localhost:6333
+QDRANT_API_KEY=your_qdrant_api_key_if_cloud
+
+# LLM Configuration (e.g., OpenAI, Gemini, etc.)
+OPENAI_API_KEY=your_api_key
+```
+
+#### 3. Backend Setup
+1. Create a virtual environment:
+```bash
+   python -m venv .venv
+   source .venv/bin/activate  # Windows: .venv\Scripts\activate
+```
+2. Install dependencies:
+```bash
+   pip install -r requirements.txt
+```
+3. **Run the Backend**:
+```bash
+   python Backend/main.py
+```
+   > **Note:** On the first run, the backend will automatically detect missing indexes and run `create_indexes.py` and `create_behavior_indexes.py` to initialize the database.
+
+   API Documentation will be available at: `http://localhost:8000/docs`
+
+#### 4. Frontend Setup
+1. Navigate to the frontend directory:
+```bash
+   cd app_version_2
+```
+2. Install dependencies:
+```bash
+   npm install
+```
+3. Run the development server:
+```bash
+   npm run dev
+```
+   Frontend will be available at: `http://localhost:3000` (or the port shown in terminal)
+
+---
+
+## 🎯 How to Use
+
+1. **Home Feed**: Initially displays generic trending items. As you interact, it adapts to show products matching your interests.
+2. **Search**:
+   - **Text**: Type "red running shoes" to find matches.
+   - **Image**: Upload a photo of a shoe to find similar ones.
+3. **Product Interaction**: Click on products. The system records this "view" event.
+4. **Personalization**: Go back to the home feed or refresh. You should see recommendations change based on what you just viewed or searched for, thanks to the **User Behavior Tracker**.
+
+---
+
+## 🔧 API Endpoints Overview
+
+- `POST /api/search`: Hybrid search with text/image.
+- `GET /api/products`: Fetches the main feed. **Personalized** if `session_id` is provided.
+- `POST /api/track`: Receives user events (clicks, searches) to update their behavioral profile.
+- `GET /api/recommendations`: Returns specific product suggestions based on session history.
+
+---
+
+## 👥 Authors
+Created for the **Vectors Hackathon** to demonstrate the power of Vector Search in e-commerce personalization.

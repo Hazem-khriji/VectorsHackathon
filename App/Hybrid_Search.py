@@ -7,30 +7,35 @@ class HybridSearcher:
     LATE_INTERACTION_MODEL = "colbert-ir/colbertv2.0"
 
     def __init__(self, collection_name):
+        import os
         self.collection_name = collection_name
-        self.qdrant_client = QdrantClient(url="http://localhost:6333")
+        self.qdrant_client = QdrantClient(
+            url=os.getenv("QDRANT_URL", "http://localhost:6333"),
+            api_key=os.getenv("QDRANT_API_KEY")
+        )
 
 
-    def search(self, text: str,filters=None):
+    def search(self, text: str, filters=None, limit: int = 5, offset: int = 0):
         search_result = self.qdrant_client.query_points(
             collection_name=self.collection_name,
             prefetch=[
                 models.Prefetch(
                     query=models.Document(text=text, model=self.DENSE_MODEL),
                     using="text-dense",
-                    limit=5
+                    limit=limit + offset # Fetch more to support offset
                 ),
                 models.Prefetch(
                     query=models.Document(text=text, model=self.SPARSE_MODEL),
                     using="text-sparse",
-                    limit=5
+                    limit=limit + offset
                 ),
             ],
             query=models.Document(text=text, model=self.LATE_INTERACTION_MODEL),
             using="text-late-interaction",
             with_payload=True,
             query_filter=filters,
-            limit=5,
+            limit=limit,
+            offset=offset,
         ).points
         metadata = [point.payload for point in search_result]
         return metadata

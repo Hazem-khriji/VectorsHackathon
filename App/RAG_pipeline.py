@@ -1,13 +1,17 @@
 from langchain_core.output_parsers import JsonOutputParser
-from App.llms import model, ollama_model
+from App.llms import model, ollama_model, vision_model
 from App.prompts import query_refinement, image_query_extraction, products_choice
 from langchain_core.prompts import ChatPromptTemplate
 import base64
 from langchain_core.messages import HumanMessage
 from qdrant_client import QdrantClient,models
 from App.Hybrid_Search import HybridSearcher
+import os
 
-client = QdrantClient(url="http://localhost:6333")
+client = QdrantClient(
+    url=os.getenv("QDRANT_URL", "http://localhost:6333"),
+    api_key=os.getenv("QDRANT_API_KEY")
+)
 
 class Pipeline :
     def __init__(self):
@@ -17,7 +21,7 @@ class Pipeline :
         self.chain_refinement = self.prompt_refinement | model | JsonOutputParser()
         self.chain_choice = self.prompt_choice | model
 
-    def describe_image(image_path: str):
+    def describe_image(self, image_path: str):
         with open(image_path, "rb") as image_file:
             image_data = base64.b64encode(image_file.read()).decode("utf-8")
 
@@ -32,9 +36,15 @@ class Pipeline :
         )
 
         try:
-            response = model.invoke([message])
+            # Use the vision model for image description
+            print("DEBUG: Invoking vision model...")
+            response = vision_model.invoke([message])
+            print(f"DEBUG: Vision response: {response}")
             return response.content
         except Exception as e:
+            print(f"DEBUG: Vision Model Error: {e}")
+            import traceback
+            traceback.print_exc()
             return ""
 
     def search (self, query,filters):
@@ -45,14 +55,14 @@ class Pipeline :
             answer = self.chain_refinement.invoke({"query": query})
             return answer
         except Exception as e:
-            return {"error": f"Failed to parse: {str(e)}", "raw_query": query}
+            return {"filters": {}, "error": f"Failed to parse: {str(e)}"}
 
     def make_choice(self,query,product_list):
         try:
             answer = self.chain_choice.invoke({"query": query, "product_list": product_list})
             return answer.content
         except Exception as e:
-            return {"error": f"Failed to rerank products : {str(e)}", "raw_query": query}
+            return f"I encountered an error analyzing the products: {str(e)}. However, here are the search results potentially relevant to: {query}"
 
     def pipeline(self,query:str,image_path:str=None):
         if(image_path):

@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - QDRANT_URL=${QDRANT_URL}
+      - QDRANT_API_KEY=${QDRANT_API_KEY}
+    volumes:
+      # Mount code for hot reload (optional, removed for "ship to friend" stability)
+      - ./uploads:/app/Backend/uploads
+
+  # Frontend UI
+  frontend:
+    build:
+      context: ./Frontend/app_version_2
+      dockerfile: Dockerfile
+    ports:
+      - "80:80" # Exposed on port 80 for easy access
+    depends_on:
+      - backend
