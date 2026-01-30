@@ -12,8 +12,8 @@ User_Input: {query}
 
 Instructions:
 Analyze the input and output a JSON object with these exact fields:
-- semantic_query: optimized string for vector similarity.It nees to start with the name of the product,then the category and finally the description all in ONE string.
-- filters: [ "max_price": numeric_value, "monthly_cash_flow": numeric_value, "category": string ]
+- semantic_query: optimized string for vector similarity. Start with product name, then category, then description.
+- filters: {{ "max_price": numeric_value_or_null, "monthly_allowance": numeric_value_or_null, "category": string_or_null }}
 - keywords: [keywords] (will be used in the sparse search to better enhance results).
 
 Response Format:
@@ -49,22 +49,20 @@ You are an expert Financial Advisor and Personal Shopping Assistant. Your goal i
 User Query: "{query}"
 
 ### CANDIDATE PRODUCTS
-Here are the top 5 products found in our database:
+Here are the refined products found in our database (some might be slightly over budget but strictly better value):
 {product_list}
 
 ### TASK
-1. Analyze the user's intent from the query .
-2. Select the top 1, 2, or 3 products (only the ones that best fit).
-3. For each selected product, provide an explanation of the choice for the user.
+1. Analyze the user's intent.
+2. Select the top 1-3 products.
+3. For each selected product, provide an explanation.
 
 ### CONSTRAINTS
-- CRITICAL: Your explanation for each product must focus EXCLUSIVELY on how its features and price satisfy the user's specific query.
-- DO NOT compare products (e.g., do not say "This is cheaper than Product B"). 
-- DO NOT mention the other products in the list.
-- Each recommendation should feel like an independent, expert opinion on that specific item's value to the user.
-- Never return an empty list .There should be at least one product even if it's a replacement and never mention yourself in any way . 
+- If a product is over the user's budget, explicitly justify it (e.g., "It is $50 over your limit, but offers X feature which you asked for").
+- If the product fits the budget, highlight that.
+- Focus on value-for-money and financial fit.
+- Adress the user directly.
 
 ### OUTPUT FORMAT 
-Return a well-formatted string in which you mention the product(s) (name and url) along with the reason 
-Adress the user directly.
+Return a well-formatted string mentioning the product(s) (name, price, and rationale).
 """

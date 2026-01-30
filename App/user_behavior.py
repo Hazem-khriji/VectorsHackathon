@@ -192,25 +192,31 @@ class UserBehaviorTracker:
         """
         behaviors = self.get_user_preferences(session_id, limit=50)
         
-        # Aggregate preferences by category with weights
-        category_scores = {}
+        # Aggregate preferences by category/interest with weights
+        interest_scores = {}
         for behavior in behaviors:
             event_type = behavior.get("event_type", "")
             data = behavior.get("data", {})
             weight = behavior.get("weight", 0.2)
             
-            category = data.get("category", "")
-            if category:
-                category_scores[category] = category_scores.get(category, 0) + weight
+            # Use category if available, otherwise use search query
+            interest = data.get("category", "")
+            if not interest and event_type == "search":
+                interest = data.get("query", "")
+            
+            if interest:
+                # Normalize interest text
+                interest = interest.strip().lower()
+                interest_scores[interest] = interest_scores.get(interest, 0) + weight
         
-        # Sort by score and return top categories
-        sorted_categories = sorted(
-            category_scores.items(), 
+        # Sort by score and return top interests
+        sorted_interests = sorted(
+            interest_scores.items(), 
             key=lambda x: x[1], 
             reverse=True
         )
         
-        return sorted_categories[:limit]
+        return sorted_interests[:limit]
 
     def get_cumulative_context(self, session_id: str, limit: int = 15) -> str:
         """

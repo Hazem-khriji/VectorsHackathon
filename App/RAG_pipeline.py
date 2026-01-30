@@ -72,11 +72,14 @@ class Pipeline :
                 query = query
         refined_query = self.refine_query(query)
         try:
+            # Enforce strict budget constraint
+            max_price_limit = refined_query["filters"].get("max_price")
+            
             query_filter = models.Filter(
-                should=[
+                must=[
                     models.FieldCondition(
                         key="discounted_price",
-                        range=models.Range(lte=refined_query["filters"]["max_price"]),
+                        range=models.Range(lte=max_price_limit),
                     )
                 ],
             )
